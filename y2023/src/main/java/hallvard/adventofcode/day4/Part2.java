@@ -11,7 +11,7 @@ public class Part2 {
 
     private record ScratchCard(int id, Set<Integer> winningNumbers, Set<Integer> numbers) {
         private int intersectionSize() {
-            var copy = new HashSet(winningNumbers);
+            var copy = new HashSet<>(winningNumbers);
             copy.retainAll(numbers);
             return copy.size();
         }
