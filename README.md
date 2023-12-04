@@ -3,7 +3,7 @@
 # Advent of code
 
 ## 2023
-[Day 1](y2023/src/main/hallvard.adventofcode.day1)
-[Day 2](y2023/src/main/hallvard.adventofcode.day2)
-[Day 3](y2023/src/main/hallvard.adventofcode.day3)
-[Day 4](y2023/src/main/hallvard.adventofcode.day4)
+- [Day 1](y2023/src/main/java/hallvard/adventofcode/day1)
+- [Day 2](y2023/src/main/java/hallvard/adventofcode/day2)
+- [Day 3](y2023/src/main/java/hallvard/adventofcode/day3)
+- [Day 4](y2023/src/main/java/hallvard/adventofcode/day4)
