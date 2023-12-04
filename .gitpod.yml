@@ -1,6 +1,6 @@
-image:
-  file: .gitpod.Dockerfile
+#image:
+#  file: .gitpod.Dockerfile
 
-#tasks:
-#  - name: "Use SDK 21"
-#    init: sdk install java 21.0.1-tem && sdk default java 21.0.1-tem
+tasks:
+  - name: "Use SDK 21"
+    init: sdk install java 21.0.1-tem && sdk default java 21.0.1-tem
