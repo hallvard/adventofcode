@@ -13,10 +13,8 @@ public class Part1Test {
         treb7uchet
         """;
 
-    private final Part1 part1 = new Part1();
-
     @Test
-    public void testSample() {
-        assertEquals(142, part1.compute(SAMPLE));
+    public void test() {
+        assertEquals(142, new Part1().compute(SAMPLE));
     }
 }

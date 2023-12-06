@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 
-public class Part2Test {
+public class Day3Test {
 
     public final static String SAMPLE = """
         467..114..
@@ -19,10 +19,13 @@ public class Part2Test {
         .664.598..
         """;
 
-    private final Part2 part2 = new Part2();
+    @Test
+    public void testPart1() {
+        assertEquals(4361, new Part1().compute(SAMPLE.split("\\s+")));
+    }
 
     @Test
-    public void testSample() {
-        assertEquals(467835, part2.compute(SAMPLE.split("\\s+")));
+    public void testPart2() {
+        assertEquals(467835, new Part2().compute(SAMPLE.split("\\s+")));
     }
 }

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 
-public class Part1Test {
+public class Day4Test {
 
     public final static String SAMPLE = """
         Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
@@ -15,10 +15,13 @@ public class Part1Test {
         Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
         """;
 
-    private final Part1 part1 = new Part1();
+    @Test
+    public void testPart1() {
+        assertEquals(13, new Part1().compute(SAMPLE.split("\n")));
+    }
 
     @Test
-    public void testSample() {
-        assertEquals(13, part1.compute(SAMPLE.split("\n")));
+    public void testPart2() {
+        assertEquals(30, new Part2().compute(SAMPLE.split("\n")));
     }
 }

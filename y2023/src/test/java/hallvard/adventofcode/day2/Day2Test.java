@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 
-public class Part1Test {
+public class Day2Test {
 
     public final static String SAMPLE = """
         Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
@@ -14,10 +14,13 @@ public class Part1Test {
         Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
         """;
 
-    private final Part1 part1 = new Part1();
+    @Test
+    public void testPart1() {
+        assertEquals(8, new Part1().compute(SAMPLE, new Part1.GameColors(12, 13, 14)));
+    }
 
     @Test
-    public void testSample() {
-        assertEquals(8, part1.compute(SAMPLE, new Part1.GameColors(12, 13, 14)));
+    public void testPart2() {
+        assertEquals(2286, new Part2().compute(SAMPLE));
     }
 }

@@ -16,10 +16,8 @@ public class Part2Test {
         7pqrstsixteen
         """;
 
-    private final Part2 part2 = new Part2();
-
     @Test
-    public void testSample() {
-        assertEquals(281, part2.compute(SAMPLE));
+    public void test() {
+        assertEquals(281, new Part2().compute(SAMPLE));
     }
 }
