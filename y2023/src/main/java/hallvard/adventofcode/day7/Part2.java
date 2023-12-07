@@ -1,4 +1,4 @@
-package hallvard.adventofcode.day0;
+package hallvard.adventofcode.day7;
 
 public class Part2 {
 
