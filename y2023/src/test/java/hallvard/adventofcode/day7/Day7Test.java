@@ -33,6 +33,6 @@ public class Day7Test {
 
     @Test
     public void testPart2() {
-        // assertEquals(0, new Part2().compute(SAMPLE));
+        assertEquals(5905, new Part2().compute(SAMPLE.split("\\s+")));
     }
 }

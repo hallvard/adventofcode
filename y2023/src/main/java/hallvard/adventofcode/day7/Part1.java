@@ -3,7 +3,6 @@ package hallvard.adventofcode.day7;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,22 +27,8 @@ public class Part1 {
         
         FiveOfAKind, FourOfAKind, FullHouse, ThreeOfAKind, TwoPairs, OnePair, HighCard;
 
-        private static List<Integer> orderedCardCounts(String hand) {
-            Map<Character, Integer> cardCounts = new HashMap<>();
-            for (int i = 0; i < hand.length(); i++) {
-                var card = hand.charAt(i);
-                cardCounts.put(card, cardCounts.getOrDefault(card, 0) + 1);
-            }
-            var countValues = new ArrayList<Integer>(cardCounts.values());
-            Collections.sort(countValues);
-            Collections.reverse(countValues);
-            return countValues;
-        }
-        
-        public static HandType classify(String hand) {
-            List<Integer> cardCounts = orderedCardCounts(hand);
-            int count12 = cardCounts.get(0) * 10 + (cardCounts.size() > 1 ? cardCounts.get(1) : 0);
-            return switch (count12) {
+        public static HandType classify(int highestCardCountsAsInt) {
+            return switch (highestCardCountsAsInt) {
                 case 50 -> FiveOfAKind;
                 case 41 -> FourOfAKind;
                 case 32 -> FullHouse;
@@ -53,9 +38,24 @@ public class Part1 {
                 default -> HighCard;
             };
         }
-    }
 
-    public static final Comparator<Character> CARD_COMPARATOR = (c1, c2) -> Integer.compare(cardRank(c1), cardRank(c2));
+        private static List<Integer> orderedCardCounts(String hand) {
+            Map<Character, Integer> cardCounts = new HashMap<>();
+            for (int i = 0; i < hand.length(); i++) {
+                var card = hand.charAt(i);
+                cardCounts.put(card, cardCounts.getOrDefault(card, 0) + 1);
+            }
+            var countValues = new ArrayList<>(cardCounts.values());
+            Collections.sort(countValues);
+            Collections.reverse(countValues);
+            return countValues;
+        }
+        
+        public static HandType classify(String hand) {
+            List<Integer> cardCounts = orderedCardCounts(hand);
+            return classify(cardCounts.get(0) * 10 + (cardCounts.size() > 1 ? cardCounts.get(1) : 0));
+        }
+    }
 
     public record HandAndBid(String hand, HandType type, int bid) {
         public HandAndBid(String hand, int bid) {
@@ -63,7 +63,7 @@ public class Part1 {
         }
     }
 
-    public int compare(HandAndBid hand1, HandAndBid hand2) {
+    public static int compare(HandAndBid hand1, HandAndBid hand2) {
         int compared = hand1.type.compareTo(hand2.type);
         if (compared == 0) {
             compared = Arrays.compare(cardRanks(hand1.hand), cardRanks(hand2.hand));
@@ -76,7 +76,7 @@ public class Part1 {
         for (int i = 0; i < handsAndBids.length; i += 2) {
             handAndBidList.add(new HandAndBid(handsAndBids[i], Integer.parseInt(handsAndBids[i + 1])));
         }
-        Collections.sort(handAndBidList, this::compare);
+        Collections.sort(handAndBidList, Part1::compare);
         int sum = 0;
         for (int i = 0; i < handAndBidList.size(); i++) {
             sum += handAndBidList.get(i).bid * (handAndBidList.size() - i);
