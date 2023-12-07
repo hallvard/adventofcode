@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Part1 {
 
-    public static final String CARDS_VALUES = "AKQJT98765432";
+    private final static String CARDS_VALUES = "AKQJT98765432";
 
-    public static int cardRank(char card) {
-        return CARDS_VALUES.indexOf(card);
+    public int cardRank(char card) {
+        return Part1.CARDS_VALUES.indexOf(card);
     }
 
-    public static int[] cardRanks(String cards) {
+    public int[] cardRanks(String cards) {
         int[] ranks = new int[cards.length()];
         for (int i = 0; i < cards.length(); i++) {
             ranks[i] = cardRank(cards.charAt(i));
@@ -38,32 +37,27 @@ public class Part1 {
                 default -> HighCard;
             };
         }
-
-        private static List<Integer> orderedCardCounts(String hand) {
-            Map<Character, Integer> cardCounts = new HashMap<>();
-            for (int i = 0; i < hand.length(); i++) {
-                var card = hand.charAt(i);
-                cardCounts.put(card, cardCounts.getOrDefault(card, 0) + 1);
-            }
-            var countValues = new ArrayList<>(cardCounts.values());
-            Collections.sort(countValues);
-            Collections.reverse(countValues);
-            return countValues;
-        }
-        
-        public static HandType classify(String hand) {
-            List<Integer> cardCounts = orderedCardCounts(hand);
-            return classify(cardCounts.get(0) * 10 + (cardCounts.size() > 1 ? cardCounts.get(1) : 0));
-        }
     }
 
-    public record HandAndBid(String hand, HandType type, int bid) {
-        public HandAndBid(String hand, int bid) {
-            this(hand, HandType.classify(hand), bid);
+    public int highestCardCountsAsInt(String hand) {
+        Map<Character, Integer> cardCounts = new HashMap<>();
+        for (int i = 0; i < hand.length(); i++) {
+            var card = hand.charAt(i);
+            cardCounts.put(card, cardCounts.getOrDefault(card, 0) + 1);
         }
+        var countValues = new ArrayList<>(cardCounts.values());
+        Collections.sort(countValues);
+        Collections.reverse(countValues);
+        return countValues.get(0) * 10 + (countValues.size() > 1 ? countValues.get(1) : 0);
+    }
+    
+    public HandType classify(String hand) {
+        return HandType.classify(highestCardCountsAsInt(hand));
     }
 
-    public static int compare(HandAndBid hand1, HandAndBid hand2) {
+    public record HandAndBid(String hand, HandType type, int bid) {}
+
+    public int compare(HandAndBid hand1, HandAndBid hand2) {
         int compared = hand1.type.compareTo(hand2.type);
         if (compared == 0) {
             compared = Arrays.compare(cardRanks(hand1.hand), cardRanks(hand2.hand));
@@ -74,9 +68,9 @@ public class Part1 {
     public int compute(String[] handsAndBids) {
         var handAndBidList = new ArrayList<HandAndBid>();
         for (int i = 0; i < handsAndBids.length; i += 2) {
-            handAndBidList.add(new HandAndBid(handsAndBids[i], Integer.parseInt(handsAndBids[i + 1])));
+            handAndBidList.add(new HandAndBid(handsAndBids[i], classify(handsAndBids[i]), Integer.parseInt(handsAndBids[i + 1])));
         }
-        Collections.sort(handAndBidList, Part1::compare);
+        Collections.sort(handAndBidList, this::compare);
         int sum = 0;
         for (int i = 0; i < handAndBidList.size(); i++) {
             sum += handAndBidList.get(i).bid * (handAndBidList.size() - i);
