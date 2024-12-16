@@ -18,6 +18,6 @@ public class Day9Test {
 
     @Test
     public void testPart2() {
-        assertEquals(0, new Part2().compute(SAMPLE.split("\n")));
+        assertEquals(2, new Part2().compute(SAMPLE.split("\n")));
     }
 }

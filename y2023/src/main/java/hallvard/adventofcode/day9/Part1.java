@@ -4,17 +4,19 @@ import java.util.stream.Stream;
 
 public class Part1 {
 
-    public int extrapolate(int[] numbers) {
+    protected int extrapolate(int[] numbers, int diff) {
+        return numbers[numbers.length - 1] + diff;
+    }
+
+    protected int extrapolate(int[] numbers) {
         int[] diffs = new int[numbers.length - 1];
-        int lastNum = 0, lastDiff = 0;
         boolean allEql = true;
         for (int i = 0; i < numbers.length - 1; i++) {
-            lastNum = numbers[i + 1];
-            lastDiff = lastNum - numbers[i];
-            diffs[i] = lastDiff;
-            allEql = allEql && (i == 0 || diffs[i - 1] == lastDiff);
+            int diff = numbers[i + 1] - numbers[i];
+            diffs[i] = diff;
+            allEql = allEql && (i == 0 || diffs[i - 1] == diff);
         }
-        return lastNum + (allEql ? lastDiff : extrapolate(diffs));
+        return extrapolate(numbers, allEql ? diffs[0] : extrapolate(diffs));
     }
 
     public int compute(String[] lines) {
